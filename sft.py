@@ -79,9 +79,11 @@ dataset = load_from_disk(dataset_path)
 
 # 将数据集中的每一行应用格式化函数，生成模型输入所需的文本
 dataset = dataset['train'].map(formatting_prompts_func, batched=True)
-for i in range(min(10, len(dataset))):  # 使用min确保不会超出数据集长度
-    record = dataset[i]
-    print(f"symbol: {record.get('text', 'N/A')}")
+
+# 检查生成结果，debug用
+# for i in range(min(10, len(dataset))):  # 使用min确保不会超出数据集长度
+#     record = dataset[i]
+#     print(f"symbol: {record.get('text', 'N/A')}")
 
 # 对模型进行 LoRA（低秩适配）配置，以进行高效的参数微调
 model = FastLanguageModel.get_peft_model(
