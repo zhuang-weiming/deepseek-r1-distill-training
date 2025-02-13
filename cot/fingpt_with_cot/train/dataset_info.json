@@ -10,10 +10,6 @@
       "dtype": "string",
       "_type": "Value"
     },
-    "cot": {
-      "dtype": "string",
-      "_type": "Value"
-    },
     "period": {
       "dtype": "string",
       "_type": "Value"
@@ -23,6 +19,10 @@
       "_type": "Value"
     },
     "symbol": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "cot": {
       "dtype": "string",
       "_type": "Value"
     }

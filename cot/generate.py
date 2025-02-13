@@ -1,6 +1,6 @@
 import logging
 from datetime import datetime
-from datasets import load_dataset, DatasetDict
+from datasets import load_dataset, DatasetDict, Dataset
 from google import genai
 
 # 设置日志配置
@@ -19,7 +19,7 @@ def generate_cot_with_gemini(prompt, client):
         elapsed_time = end_time - start_time
         logging.info(f"Request completed in {elapsed_time.total_seconds()} seconds")
         api_response = response.text
-        # logging.info(f"API Response: {api_response}")
+        logging.info(f"API Response: {api_response}")
 
         # 假设API返回的内容是通过'cot<think>'分割的answer和cot
         parts = api_response.split('cot<think>', 1)
@@ -38,7 +38,7 @@ def generate_cot_with_gemini(prompt, client):
         return '', ''
 
 def add_cot_to_record(record, client):
-    prompt = record['prompt'] + "并且把你的思路链内容翻译成中文，给出你是怎么分析的，只需要中文版本的放在回答后面，格式为 cot<think>: ... "
+    prompt = record['prompt'] + "并且复制出你的思路链内容翻译成中文放在回答后面，一摸一样复制出你是怎么分析的并翻译成中文，标题为cot<think>"
     answer, cot = generate_cot_with_gemini(prompt, client)
     record['answer'] = answer
     record['cot'] = cot
@@ -48,11 +48,13 @@ def add_cot_to_record(record, client):
 dataset = load_dataset("FinGPT/fingpt-forecaster-sz50-20230201-20240101")
 
 # 初始化客户端
-api_keys = ['AIzaSyB8INnHRD7KXfPdlY37X3yGBYAwhYxN1hY', 'AIzaSyAQOd9XKz5J2gEeoOkIkHqAWNy3n451Gto']  # 替换为你的实际API密钥
+api_keys = ['AIzaSyARu5wgFiuvKRPxXYSndwBZ9LdOoJ6DUiw', 'AIzaSyAEpdIDC1gtjPGh-LvnbsqQLKv-_CxP8Ck']  # 替换为你的实际API密钥
 clients = [create_client(key) for key in api_keys]
 
 # 分割数据集
 halfway_point = len(dataset['train']) // 2
+# halfway_point = 5
+
 part1 = dataset['train'].select(range(halfway_point))
 part2 = dataset['train'].select(range(halfway_point, len(dataset['train'])))
 
@@ -60,25 +62,28 @@ part2 = dataset['train'].select(range(halfway_point, len(dataset['train'])))
 updated_train_data_part1 = []
 for i, record in enumerate(part1):
     logging.info(f"Processing record {i + 1}/{len(part1)} with first API key")
-    updated_record = add_cot_to_record(record, clients[0])
+    updated_record = add_cot_to_record(dict(record), clients[0])  # 将record转换为dict
     updated_train_data_part1.append(updated_record)
 
 # 对第二部分数据使用第二个API密钥处理
 updated_train_data_part2 = []
 for i, record in enumerate(part2):
     logging.info(f"Processing record {i + halfway_point + 1}/{len(dataset['train'])} with second API key")
-    updated_record = add_cot_to_record(record, clients[1])
+    updated_record = add_cot_to_record(dict(record), clients[1])  # 将record转换为dict
     updated_train_data_part2.append(updated_record)
 
 # 合并两部分数据
 updated_train_data = updated_train_data_part1 + updated_train_data_part2
+# updated_train_data = updated_train_data_part1 
 
 # 更新数据集
-dataset = DatasetDict({'train': dataset['train'].new(updated_train_data)})
+updated_dataset = Dataset.from_list(updated_train_data)
 
 # 查看前几条记录以确认新字段已正确添加
-logging.info(f"First record after adding answer and cot fields: {dataset['train'][0]}")
+logging.info(f"First record after adding answer and cot fields: {updated_dataset[0]}")
 
 # 保存修改后的数据集到本地文件
-dataset.save_to_disk("fingpt_with_cot")
+dataset_dict = DatasetDict({'train': updated_dataset})
+dataset_dict.save_to_disk("fingpt_with_cot")
 logging.info("Dataset saved successfully.")
+
