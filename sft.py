@@ -1,8 +1,13 @@
+import time
+
 from unsloth import FastLanguageModel 
 from unsloth import is_bfloat16_supported
 from trl import SFTTrainer
 from transformers import TrainingArguments
 from datasets import load_dataset, load_from_disk
+
+# 记录程序开始时间
+start_time = time.time()
 
 # 定义训练时使用的提示模板
 train_prompt_style = """
@@ -68,7 +73,7 @@ def formatting_prompts_func(examples):
 # 加载指定的数据集的训练集部分
 # dataset = load_dataset("FinGPT/fingpt-forecaster-sz50-20230201-20240101", split="train")
 # 加载保存的数据集
-dataset_path = "./cot/fingpt_with_cot"  # 提供保存数据集的目录路径
+dataset_path = "./cot/fingpt_combined"  # 提供保存数据集的目录路径
 dataset = load_from_disk(dataset_path)
 
 
@@ -119,3 +124,12 @@ trainer = SFTTrainer(
 )
 # 开始训练模型
 trainer.train()
+
+# 记录程序结束时间
+end_time = time.time()
+
+# 计算程序运行时间
+execution_time = end_time - start_time
+
+# 打印程序运行时间
+print(f"程序运行时间：{execution_time} 秒")
