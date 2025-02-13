@@ -38,7 +38,7 @@ def generate_cot_with_gemini(prompt, client):
         return '', ''
 
 def add_cot_to_record(record, client):
-    prompt = record['prompt'] + "并且复制出你的思路链内容翻译成中文放在回答后面，一摸一样复制出你是怎么分析的并翻译成中文，标题为cot<think>"
+    prompt = record['prompt'] + "。并且复制出你的思路链内容翻译成中文放在回答后面，一摸一样复制出你是怎么分析的并翻译成中文，标题为cot<think>"
     answer, cot = generate_cot_with_gemini(prompt, client)
     record['answer'] = answer
     record['cot'] = cot
