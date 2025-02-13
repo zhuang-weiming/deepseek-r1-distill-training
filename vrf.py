@@ -50,7 +50,7 @@ question = "2023年1月贵州茅台的股票走势"
 # model.load_state_dict(adapter_state_dict)
 
 FastLanguageModel.for_inference(model)
-inputs = tokenizer([prompt_style.format(question, "")], return_tensors="pt").to("cpu")
+inputs = tokenizer([prompt_style.format(question, "")], return_tensors="pt").to("cuda")
 
 # 生成文本
 outputs = model.generate(
