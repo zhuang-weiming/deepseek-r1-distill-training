@@ -1,3 +1,4 @@
+import torch
 from unsloth import FastLanguageModel
 
 model_name = "unsloth/DeepSeek-R1-Distill-Qwen-7B-unsloth-bnb-4bit"
@@ -21,9 +22,6 @@ prompt_style = """
 
 ### 问题：
 {}
-
-### 回复：
-{}
 """
 
 question = "2023年1月贵州茅台的股票走势"
@@ -46,11 +44,11 @@ question = "2023年1月贵州茅台的股票走势"
 # )
 
 # 加载微调后的 adapter 权重
-# adapter_state_dict = torch.load("./outputs/checkpoint-60/training_args.bin", map_location="cuda")
-# model.load_state_dict(adapter_state_dict)
+adapter_path = "./outputs/fingpt-data-1813"
+model.load_adapter(adapter_path)
 
 FastLanguageModel.for_inference(model)
-inputs = tokenizer([prompt_style.format(question, "")], return_tensors="pt").to("cuda")
+inputs = tokenizer([prompt_style.format(question)], return_tensors="pt").to("cuda")
 
 # 生成文本
 outputs = model.generate(
