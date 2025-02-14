@@ -56,7 +56,7 @@ inputs = tokenizer([prompt_style.format(question, "")], return_tensors="pt").to(
 outputs = model.generate(
     input_ids=inputs.input_ids,
     attention_mask=inputs.attention_mask,
-    max_new_tokens=1200,  # 设置生成的最大 token 数量
+    max_new_tokens=50000,  # 设置生成的最大 token 数量
     use_cache=True
 )
 
