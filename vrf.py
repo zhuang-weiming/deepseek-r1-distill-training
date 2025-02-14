@@ -44,7 +44,7 @@ question = "2023年1月贵州茅台的股票走势"
 # )
 
 # 加载微调后的 adapter 权重
-adapter_path = "./outputs/fingpt-data-1813"
+adapter_path = "./outputs/checkpoint-60"
 model.load_adapter(adapter_path)
 
 FastLanguageModel.for_inference(model)
