@@ -1,3 +1,4 @@
+import torch
 from unsloth import FastLanguageModel
 
 model_name = "unsloth/DeepSeek-R1-Distill-Qwen-7B-unsloth-bnb-4bit"
@@ -23,7 +24,7 @@ prompt_style = """
 {}
 
 ### 回复：
-<think>{}
+{}
 """
 
 question = "2023年1月贵州茅台的股票走势"
@@ -49,6 +50,14 @@ question = "2023年1月贵州茅台的股票走势"
 # adapter_state_dict = torch.load("./outputs/checkpoint-60/training_args.bin", map_location="cuda")
 # model.load_state_dict(adapter_state_dict)
 
+# 2. 加载微调得到的适配器权重（outputs/checkpoint-60中仅保存了LoRA参数）
+# unsloth 的微调流程只保存了 adapter 参数，您需要将其加载到大模型中。
+# 假设在 checkpoint 文件夹中保存了 adapter 的 state_dict（如 adapter.bin）
+adapter_path = "outputs/checkpoint-60/adapter.bin"
+adapter_state = torch.load(adapter_path, map_location="cpu")
+# 加载时使用 strict=False，因为只更新了部分参数
+model.load_state_dict(adapter_state, strict=False)
+
 FastLanguageModel.for_inference(model)
 inputs = tokenizer([prompt_style.format(question, "")], return_tensors="pt").to("cuda")
 
@@ -56,7 +65,7 @@ inputs = tokenizer([prompt_style.format(question, "")], return_tensors="pt").to(
 outputs = model.generate(
     input_ids=inputs.input_ids,
     attention_mask=inputs.attention_mask,
-    max_new_tokens=100,  # 设置生成的最大 token 数量
+    max_new_tokens=1200,  # 设置生成的最大 token 数量
     use_cache=True
 )
 
