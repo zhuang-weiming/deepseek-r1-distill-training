@@ -15,9 +15,7 @@ train_prompt_style = """
 回答之前，请仔细思考问题，并构建循序渐进的思路，以确保做出合乎逻辑且准确的预测。
 
 ### 任务说明：
-您是一位资深金融分析师，精通股票交易、经济分析和市场趋势预测。请根据下面的问题提示以及额外上下文，做出预测性分析。预测回答需包括两部分：
-1. **预测答案**：针对问题的详细解答和分析结论。
-2. **预期波动范围**：预测答案中涉及的股票价格波动幅度。
+您是一位资深金融分析师，精通股票交易、经济分析和市场趋势预测。
 
 股票和信息：
 - **时间周期**：{}
@@ -27,9 +25,7 @@ train_prompt_style = """
 {}
 
 ### 思维链：
-<think>
 {}
-</think>
 
 ### 预测答案：
 {}
@@ -69,8 +65,6 @@ def formatting_prompts_func(examples):
         "text": texts
     }
 
-# 加载指定的数据集的训练集部分
-# dataset = load_dataset("FinGPT/fingpt-forecaster-sz50-20230201-20240101", split="train")
 # 加载保存的数据集
 dataset_path = "./datasets/fingpt_with_cot_train_v1"  # 提供保存数据集的目录路径
 dataset = load_from_disk(dataset_path)
