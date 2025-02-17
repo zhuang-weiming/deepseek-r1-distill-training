@@ -3,7 +3,7 @@ from peft import PeftModel
 import torch
 
 # 加载原始模型和分词器
-base_model_path = "unsloth/DeepSeek-R1-Distill-Qwen-7B-unsloth-bnb-4bit"
+base_model_path = "unsloth/DeepSeek-R1-Distill-Qwen-7B-unsloth"
 tokenizer = AutoTokenizer.from_pretrained(base_model_path)
 base_model = AutoModelForCausalLM.from_pretrained(base_model_path, torch_dtype=torch.float16, device_map="auto")
 
