@@ -18,8 +18,8 @@ model_with_adapter = PeftModel.from_pretrained(model, adapter_path, adapter_name
 
 merged_model = model_with_adapter.merge_and_unload()
 
-merged_model.save_pretrained("merged_model_dir")
-tokenizer.save_pretrained("merged_model_dir")
+# merged_model.save_pretrained("merged_model_dir")
+# tokenizer.save_pretrained("merged_model_dir")
 
-merged_model.save_pretrained_merged("merged_model_16bit", tokenizer, save_method="merged_16bit")
+# merged_model.save_pretrained_merged("merged_model_16bit", tokenizer, save_method="merged_16bit")
 merged_model.save_pretrained_gguf("gguf_model_dir", tokenizer, quantization_method="q4_k_m")
