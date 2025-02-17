@@ -53,21 +53,21 @@ prompt_style = """
 question = "请分析2023年1月贵州茅台的股票走势"
 
 # Do model patching and add fast LoRA weights
-# model = FastLanguageModel.get_peft_model(
-#     model,
-#     r = 16,
-#     target_modules = ["q_proj", "k_proj", "v_proj", "o_proj",
-#                       "gate_proj", "up_proj", "down_proj",],
-#     lora_alpha = 16,
-#     lora_dropout = 0, # Supports any, but = 0 is optimized
-#     bias = "none",    # Supports any, but = "none" is optimized
-#     # [NEW] "unsloth" uses 30% less VRAM, fits 2x larger batch sizes!
-#     use_gradient_checkpointing = "unsloth", # True or "unsloth" for very long context
-#     random_state = 3407,
-#     max_seq_length = max_seq_length,
-#     use_rslora = False,  # We support rank stabilized LoRA
-#     loftq_config = None, # And LoftQ
-# )
+model = FastLanguageModel.get_peft_model(
+    model,
+    r = 16,
+    target_modules = ["q_proj", "k_proj", "v_proj", "o_proj",
+                      "gate_proj", "up_proj", "down_proj",],
+    lora_alpha = 16,
+    lora_dropout = 0, # Supports any, but = 0 is optimized
+    bias = "none",    # Supports any, but = "none" is optimized
+    # [NEW] "unsloth" uses 30% less VRAM, fits 2x larger batch sizes!
+    use_gradient_checkpointing = "unsloth", # True or "unsloth" for very long context
+    random_state = 3407,
+    max_seq_length = max_seq_length,
+    use_rslora = False,  # We support rank stabilized LoRA
+    loftq_config = None, # And LoftQ
+)
 
 # 加载微调后的 adapter 权重
 adapter_path = "./outputs/checkpoint-60"
