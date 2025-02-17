@@ -15,6 +15,6 @@ lora_model = PeftModel.from_pretrained(base_model, lora_model_path)
 merged_model = lora_model.merge_and_unload()
 
 # 保存合并后的模型
-output_dir = "merged_model"
+output_dir = "DeepSeek-R1-Distill-Qwen-7B-fin-3043-4bit"
 merged_model.save_pretrained(output_dir)
 tokenizer.save_pretrained(output_dir)
