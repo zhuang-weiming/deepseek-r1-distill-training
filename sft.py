@@ -66,7 +66,7 @@ def formatting_prompts_func(examples):
     }
 
 # 加载保存的数据集
-dataset_path = "./datasets/fingpt_with_cot_train_v1"  # 提供保存数据集的目录路径
+dataset_path = "./datasets/fingpt_cot_combined_v1"  # 提供保存数据集的目录路径
 dataset = load_from_disk(dataset_path)
 
 
