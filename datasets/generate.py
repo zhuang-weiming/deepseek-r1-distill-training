@@ -1,16 +1,11 @@
 import logging
 from datetime import datetime
-<<<<<<< HEAD
 from datasets import load_dataset, DatasetDict, Dataset, load_from_disk
-=======
-from datasets import load_dataset, DatasetDict, Dataset
->>>>>>> 105be75015a74351babbdf91b79946c0820eca2d
 from google import genai
 
 # 设置日志配置
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-<<<<<<< HEAD
 def construct_detailed_prompt(record):
     # prompt version 1
     # detailed_prompt = origin_prompt + "并且把你的思路链内容翻译成中文，给出你是怎么分析的，只需要中文版本的放在回答后面，格式为 cot<think>: ..."
@@ -72,8 +67,6 @@ CoT：
 """
     return detailed_prompt
 
-=======
->>>>>>> 105be75015a74351babbdf91b79946c0820eca2d
 def create_client(api_key):
     return genai.Client(api_key=api_key, http_options={'api_version': 'v1alpha'})
 
@@ -89,7 +82,6 @@ def generate_cot_with_gemini(prompt, client):
         api_response = response.text
         logging.info(f"API Response: {api_response}")
 
-<<<<<<< HEAD
         # prompt version 1
         # 假设API返回的内容是通过'cot<think>'分割的answer和cot
         # parts = api_response.split('cot<think>', 1)
@@ -122,30 +114,16 @@ def generate_cot_with_gemini(prompt, client):
         else:
             logging.warning("未能找到CoT或升级Answer标记，使用完整响应作为cot")
             cot = api_response
-=======
-        # 假设API返回的内容是通过'cot<think>'分割的answer和cot
-        parts = api_response.split('cot<think>', 1)
-        if len(parts) == 2:
-            answer, cot = parts
-        else:
-            logging.warning("API response does not contain expected delimiter, defaulting to full response for both fields.")
-            answer, cot = api_response, api_response
->>>>>>> 105be75015a74351babbdf91b79946c0820eca2d
         
         logging.info(f"API Response (Answer): {answer}")
         logging.info(f"API Response (COT): {cot}")
         
-<<<<<<< HEAD
         return cot, answer
-=======
-        return answer, cot
->>>>>>> 105be75015a74351babbdf91b79946c0820eca2d
     except Exception as e:
         logging.error(f"Error during API call: {e}")
         return '', ''
 
 def add_cot_to_record(record, client):
-<<<<<<< HEAD
     # 提取 [公司介绍]: 后面的内容
     # company_info_start = record['prompt'].find("[公司介绍]:")
     # if company_info_start == -1:
@@ -163,10 +141,6 @@ def add_cot_to_record(record, client):
     # logging.info(f"prompt: {prompt}") 
 
     cot, answer = generate_cot_with_gemini(prompt, client)
-=======
-    prompt = record['prompt'] + "。并且复制出你的思路链内容翻译成中文放在回答后面，一摸一样复制出你是怎么分析的并翻译成中文，标题为cot<think>"
-    answer, cot = generate_cot_with_gemini(prompt, client)
->>>>>>> 105be75015a74351babbdf91b79946c0820eca2d
     record['answer'] = answer
     record['cot'] = cot
     return record
@@ -180,10 +154,6 @@ clients = [create_client(key) for key in api_keys]
 
 # 分割数据集
 halfway_point = len(dataset['train']) // 2
-<<<<<<< HEAD
-=======
-# halfway_point = 5
->>>>>>> 105be75015a74351babbdf91b79946c0820eca2d
 
 part1 = dataset['train'].select(range(halfway_point))
 part2 = dataset['train'].select(range(halfway_point, len(dataset['train'])))
@@ -204,10 +174,6 @@ for i, record in enumerate(part2):
 
 # 合并两部分数据
 updated_train_data = updated_train_data_part1 + updated_train_data_part2
-<<<<<<< HEAD
-=======
-# updated_train_data = updated_train_data_part1 
->>>>>>> 105be75015a74351babbdf91b79946c0820eca2d
 
 # 更新数据集
 updated_dataset = Dataset.from_list(updated_train_data)
@@ -217,11 +183,5 @@ logging.info(f"First record after adding answer and cot fields: {updated_dataset
 
 # 保存修改后的数据集到本地文件
 dataset_dict = DatasetDict({'train': updated_dataset})
-<<<<<<< HEAD
 dataset_dict.save_to_disk("fingpt_with_cot_train_sz50_v2")
 logging.info("Dataset saved successfully.")
-=======
-dataset_dict.save_to_disk("fingpt_with_cot")
-logging.info("Dataset saved successfully.")
-
->>>>>>> 105be75015a74351babbdf91b79946c0820eca2d
