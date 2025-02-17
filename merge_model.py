@@ -12,14 +12,9 @@ model, tokenizer = FastLanguageModel.from_pretrained(
     load_in_4bit = True, # 以 4-bit 精度加载模型
 )
 
-adapter_path = "./outputs/checkpoint-60"  # 你的 adapter 文件所在目录
+adapter_path = "./outputs/3-fingpt-data-1813-update-prompts"  # 你的 adapter 文件所在目录
 # 注意 adapter_name 通常默认是 "default"，如果你使用其他名称，请相应修改
 model_with_adapter = PeftModel.from_pretrained(model, adapter_path, adapter_name="default")
 
 merged_model = model_with_adapter.merge_and_unload()
-
-# merged_model.save_pretrained("merged_model_dir")
-# tokenizer.save_pretrained("merged_model_dir")
-
-# merged_model.save_pretrained_merged("merged_model_16bit", tokenizer, save_method="merged_16bit")
 merged_model.save_pretrained_gguf("gguf_model_dir", tokenizer, quantization_method="q4_k_m")
