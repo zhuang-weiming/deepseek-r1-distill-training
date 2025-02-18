@@ -113,7 +113,7 @@ trainer = SFTTrainer(
         output_dir = "outputs", # 模型和日志的输出目录
         optim = "adamw_8bit", # 优化器类型，使用 8-bit AdamW 优化器
         seed = 3407, # 随机种子，确保结果可复现
-        report_to = None # 不将训练过程报告到任何平台
+        report_to="wandb", # 使用 Weights & Biases 进行实验跟踪
     ),
 )
 # 开始训练模型
