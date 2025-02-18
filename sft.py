@@ -4,7 +4,7 @@ from unsloth import FastLanguageModel
 from unsloth import is_bfloat16_supported
 from trl import SFTTrainer
 from transformers import TrainingArguments
-from datasets import load_from_disk
+from datasets import load_dataset
 
 # 记录程序开始时间
 start_time = time.time()
@@ -66,8 +66,8 @@ def formatting_prompts_func(examples):
     }
 
 # 加载保存的数据集
-dataset_path = "./datasets/fingpt_cot_combined_v2"  # 提供保存数据集的目录路径
-dataset = load_from_disk(dataset_path)
+dataset_path = "LYNN2024/fingpt_with_cot_combined_v3"  # 提供保存数据集的目录路径
+dataset = load_dataset(dataset_path)
 
 
 # 将数据集中的每一行应用格式化函数，生成模型输入所需的文本
