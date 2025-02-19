@@ -8,7 +8,7 @@ tokenizer = AutoTokenizer.from_pretrained(base_model_path)
 base_model = AutoModelForCausalLM.from_pretrained(base_model_path, torch_dtype=torch.float16)
 
 # 加载微调后的 LoRA 适配器
-lora_model_path = "outputs/8-fingpt-data-3043-labelling-v3"
+lora_model_path = "outputs/8-fingpt-data-3043-labelling-v3.1"
 lora_model = PeftModel.from_pretrained(base_model, lora_model_path)
 
 # 将 LoRA 适配器合并到原始模型

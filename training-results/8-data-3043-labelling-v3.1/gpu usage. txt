@@ -1,0 +1,28 @@
+(base) hsbcpoc@e87wgt814tvcff7:~$ nvidia-smi
+Wed Feb 19 16:00:11 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 570.86.15              Driver Version: 570.86.15      CUDA Version: 12.8     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA L20                     On  |   00000000:00:03.0 Off |                    0 |
+| N/A   64C    P0            314W /  350W |   11196MiB /  46068MiB |    100%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A           13285      G   /usr/lib/xorg/Xorg                      158MiB |
+|    0   N/A  N/A           13735    C+G   ...r/bin/linux-streaming-manager         83MiB |
+|    0   N/A  N/A           14654      G   /usr/bin/gnome-shell                    120MiB |
+|    0   N/A  N/A           16869      G   ...exec/xdg-desktop-portal-gnome         81MiB |
+|    0   N/A  N/A          501209      C   python                                10210MiB |
+|    0   N/A  N/A         1222337      G   /usr/bin/gnome-text-editor               26MiB |
+|    0   N/A  N/A         2901667      G   /usr/bin/nautilus                        62MiB |
+|    0   N/A  N/A         2906611      G   .../5751/usr/lib/firefox/firefox        238MiB |
++-----------------------------------------------------------------------------------------+
