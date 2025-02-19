@@ -11,27 +11,19 @@ start_time = time.time()
 
 # 定义训练时使用的提示模板
 train_prompt_style = """
-以下是描述任务的说明，并附带提供更多上下文的输入。请写出适当完成请求的回复。
-回答之前，请仔细思考问题，并构建循序渐进的思路，以确保做出合乎逻辑且准确的预测。
-
-### 任务说明：
-您是一位资深金融分析师，精通股票交易、经济分析和市场趋势预测。
-
-股票和信息：
-- **时间周期**：{}
-- **股票代码**：{}
-
-### 问题提示词：
+<｜begin▁of▁sentence｜>
+<｜User｜>
+**记录时间：**{}
+**股票代码：**{}
 {}
-
-### 思维链：
+<｜Assistant｜>
+<think>
 {}
-
-### 预测答案：
+</think>
 {}
-
-### 预期波动范围：
+**预测判断：**
 {}
+<｜end▁of▁sentence｜>
 """
 
 # 设置模型的最大序列长度
@@ -45,9 +37,6 @@ model, tokenizer = FastLanguageModel.from_pretrained(
     load_in_4bit = True, # 以 4-bit 精度加载模型
 )
 
-# 获取分词器的结束标记
-EOS_TOKEN = tokenizer.eos_token
-
 # 定义函数，将数据集中的各列格式化为模型输入所需的文本格式
 def formatting_prompts_func(examples):
     prompts = examples["prompt"]
@@ -59,19 +48,18 @@ def formatting_prompts_func(examples):
     texts = []
     # 遍历每一行数据，按照模板格式化文本
     for prompt, answer, cot, period, label, symbol in zip(prompts, answers, cots, periods, labels, symbols):
-        text = train_prompt_style.format(period, symbol, prompt, cot, answer, label) + EOS_TOKEN
+        text = train_prompt_style.format(period, symbol, prompt, cot, answer, label)
         texts.append(text)
     return {
         "text": texts
     }
 
 # 加载保存的数据集
-dataset_path = "LYNN2024/fingpt_with_cot_combined_test_v1"  # 提供保存数据集的目录路径
-dataset = load_dataset(dataset_path)
-
+dataset_path = "LYNN2024/fingpt_with_cot_combined_v3"  # 提供保存数据集的目录路径
+dataset = load_dataset(dataset_path, split = "train")
 
 # 将数据集中的每一行应用格式化函数，生成模型输入所需的文本
-dataset = dataset['train'].map(formatting_prompts_func, batched=True)
+dataset = dataset.map(formatting_prompts_func, batched=True)
 
 # 检查生成结果，debug用
 # for i in range(min(10, len(dataset))):  # 使用min确保不会超出数据集长度
@@ -89,7 +77,6 @@ model = FastLanguageModel.get_peft_model(
     bias = "none",    # 不对偏置项进行微调
     use_gradient_checkpointing = "unsloth", # 使用 Unsloth 提供的梯度检查点，节省显存
     random_state = 3407, # 随机种子，确保结果可复现
-    max_seq_length = max_seq_length, # 设置最大序列长度
     use_rslora = False,  # 是否使用 Rank Stabilized LoRA
     loftq_config = None, # 是否使用 LoFTQ 量化配置
 )
@@ -101,6 +88,8 @@ trainer = SFTTrainer(
     dataset_text_field = "text", # 数据集中包含文本的字段名称
     max_seq_length = max_seq_length, # 设置最大序列长度
     tokenizer = tokenizer, # 指定分词器
+    dataset_num_proc = 2,
+    packing = False,
     args = TrainingArguments(
         per_device_train_batch_size = 2, # 每个设备上的训练批次大小
         gradient_accumulation_steps = 4, # 梯度累积步数，相当于增大有效批次大小
@@ -112,6 +101,8 @@ trainer = SFTTrainer(
         logging_steps = 1, # 日志记录的步数间隔
         output_dir = "outputs", # 模型和日志的输出目录
         optim = "adamw_8bit", # 优化器类型，使用 8-bit AdamW 优化器
+        weight_decay = 0.01,
+        lr_scheduler_type = "linear",
         seed = 3407, # 随机种子，确保结果可复现
         report_to="wandb", # 使用 Weights & Biases 进行实验跟踪
     ),
