@@ -1,0 +1,93 @@
+(unsloth_env) hsbcpoc@e87wgt814tvcff7:~/ft/deepseek-r1-distill-training$ python sft.py 
+🦥 Unsloth: Will patch your computer to enable 2x faster free finetuning.
+🦥 Unsloth Zoo will now patch everything to make training faster!
+==((====))==  Unsloth 2025.2.4: Fast Qwen2 patching. Transformers: 4.48.3.
+   \\   /|    GPU: NVIDIA L20. Max memory: 44.403 GB. Platform: Linux.
+O^O/ \_/ \    Torch: 2.5.1. CUDA: 8.9. CUDA Toolkit: 12.1. Triton: 3.1.0
+\        /    Bfloat16 = TRUE. FA [Xformers = 0.0.28.post3. FA2 = False]
+ "-____-"     Free Apache license: http://github.com/unslothai/unsloth
+Unsloth: Fast downloading is enabled - ignore downloading bars which are red colored!
+Loading checkpoint shards: 100%|██████████████████| 2/2 [00:01<00:00,  1.43it/s]
+Map: 100%|████████████████████████| 3043/3043 [00:00<00:00, 16428.16 examples/s]
+Unsloth 2025.2.4 patched 28 layers with 28 QKV layers, 28 O layers and 28 MLP layers.
+Map (num_proc=2): 100%|█████████████| 3043/3043 [00:09<00:00, 310.34 examples/s]
+==((====))==  Unsloth - 2x faster free finetuning | Num GPUs = 1
+   \\   /|    Num examples = 3,043 | Num Epochs = 1
+O^O/ \_/ \    Batch size per device = 2 | Gradient Accumulation steps = 4
+\        /    Total batch size = 8 | Total steps = 60
+ "-____-"     Number of trainable parameters = 40,370,176
+wandb: WARNING The `run_name` is currently set to the same value as `TrainingArguments.output_dir`. If this was not intended, please specify a different run name by setting the `TrainingArguments.run_name` parameter.
+wandb: Currently logged in as: zwm136200 (zwm136200-hsbc) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
+wandb: Tracking run with wandb version 0.19.6
+wandb: Run data is saved locally in /home/hsbcpoc/ft/deepseek-r1-distill-training/wandb/run-20250219_152226-brix8bfr
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run outputs
+wandb: ⭐️ View project at https://wandb.ai/zwm136200-hsbc/huggingface
+wandb: 🚀 View run at https://wandb.ai/zwm136200-hsbc/huggingface/runs/brix8bfr
+{'loss': 2.3583, 'grad_norm': 0.1919626146554947, 'learning_rate': 4e-05, 'epoch': 0.0}
+{'loss': 2.4839, 'grad_norm': 0.22729654610157013, 'learning_rate': 8e-05, 'epoch': 0.01}
+{'loss': 2.3408, 'grad_norm': 0.188337504863739, 'learning_rate': 0.00012, 'epoch': 0.01}
+{'loss': 2.5508, 'grad_norm': 0.2369082123041153, 'learning_rate': 0.00016, 'epoch': 0.01}
+{'loss': 2.3419, 'grad_norm': 0.2542855739593506, 'learning_rate': 0.0002, 'epoch': 0.01}
+{'loss': 2.4645, 'grad_norm': 0.3023979067802429, 'learning_rate': 0.00019636363636363636, 'epoch': 0.02}
+{'loss': 2.4288, 'grad_norm': 0.3136938512325287, 'learning_rate': 0.00019272727272727274, 'epoch': 0.02}
+{'loss': 2.1648, 'grad_norm': 0.2441696673631668, 'learning_rate': 0.0001890909090909091, 'epoch': 0.02}
+{'loss': 2.0808, 'grad_norm': 0.21071097254753113, 'learning_rate': 0.00018545454545454545, 'epoch': 0.02}
+{'loss': 2.0393, 'grad_norm': 0.18745529651641846, 'learning_rate': 0.00018181818181818183, 'epoch': 0.03}
+{'loss': 2.0422, 'grad_norm': 0.17464374005794525, 'learning_rate': 0.0001781818181818182, 'epoch': 0.03}
+{'loss': 1.9549, 'grad_norm': 0.18246130645275116, 'learning_rate': 0.00017454545454545454, 'epoch': 0.03}
+{'loss': 1.9277, 'grad_norm': 0.18295788764953613, 'learning_rate': 0.0001709090909090909, 'epoch': 0.03}
+{'loss': 1.791, 'grad_norm': 0.18447943031787872, 'learning_rate': 0.00016727272727272728, 'epoch': 0.04}
+{'loss': 1.9058, 'grad_norm': 0.2575397193431854, 'learning_rate': 0.00016363636363636366, 'epoch': 0.04}
+{'loss': 1.7879, 'grad_norm': 0.3024275302886963, 'learning_rate': 0.00016, 'epoch': 0.04}
+{'loss': 1.9257, 'grad_norm': 0.2712031304836273, 'learning_rate': 0.00015636363636363637, 'epoch': 0.04}
+{'loss': 1.8003, 'grad_norm': 0.27988800406455994, 'learning_rate': 0.00015272727272727275, 'epoch': 0.05}
+{'loss': 1.6832, 'grad_norm': 0.20112726092338562, 'learning_rate': 0.0001490909090909091, 'epoch': 0.05}
+{'loss': 1.8732, 'grad_norm': 0.1747763454914093, 'learning_rate': 0.00014545454545454546, 'epoch': 0.05}
+{'loss': 1.6384, 'grad_norm': 0.2222307175397873, 'learning_rate': 0.00014181818181818184, 'epoch': 0.06}
+{'loss': 1.8525, 'grad_norm': 0.1984160989522934, 'learning_rate': 0.0001381818181818182, 'epoch': 0.06}
+{'loss': 1.7587, 'grad_norm': 0.1866370290517807, 'learning_rate': 0.00013454545454545455, 'epoch': 0.06}
+{'loss': 1.7789, 'grad_norm': 0.19277074933052063, 'learning_rate': 0.00013090909090909093, 'epoch': 0.06}
+{'loss': 1.6882, 'grad_norm': 0.20321433246135712, 'learning_rate': 0.00012727272727272728, 'epoch': 0.07}
+{'loss': 1.5812, 'grad_norm': 0.196238711476326, 'learning_rate': 0.00012363636363636364, 'epoch': 0.07}
+{'loss': 1.6327, 'grad_norm': 0.20462441444396973, 'learning_rate': 0.00012, 'epoch': 0.07}
+{'loss': 1.6118, 'grad_norm': 0.19960364699363708, 'learning_rate': 0.00011636363636363636, 'epoch': 0.07}
+{'loss': 1.5411, 'grad_norm': 0.20471526682376862, 'learning_rate': 0.00011272727272727272, 'epoch': 0.08}
+{'loss': 1.565, 'grad_norm': 0.2391463667154312, 'learning_rate': 0.00010909090909090909, 'epoch': 0.08}
+{'loss': 1.4609, 'grad_norm': 0.21159762144088745, 'learning_rate': 0.00010545454545454545, 'epoch': 0.08}
+{'loss': 1.5191, 'grad_norm': 0.21206574141979218, 'learning_rate': 0.00010181818181818181, 'epoch': 0.08}
+{'loss': 1.5857, 'grad_norm': 0.21281854808330536, 'learning_rate': 9.818181818181818e-05, 'epoch': 0.09}
+{'loss': 1.5242, 'grad_norm': 0.2149163782596588, 'learning_rate': 9.454545454545455e-05, 'epoch': 0.09}
+{'loss': 1.62, 'grad_norm': 0.20821991562843323, 'learning_rate': 9.090909090909092e-05, 'epoch': 0.09}
+{'loss': 1.4877, 'grad_norm': 0.2120874971151352, 'learning_rate': 8.727272727272727e-05, 'epoch': 0.09}
+{'loss': 1.5468, 'grad_norm': 0.21005529165267944, 'learning_rate': 8.363636363636364e-05, 'epoch': 0.1}
+{'loss': 1.5268, 'grad_norm': 0.19991467893123627, 'learning_rate': 8e-05, 'epoch': 0.1}
+{'loss': 1.5257, 'grad_norm': 0.1983732283115387, 'learning_rate': 7.636363636363637e-05, 'epoch': 0.1}
+{'loss': 1.3631, 'grad_norm': 0.17066675424575806, 'learning_rate': 7.272727272727273e-05, 'epoch': 0.11}
+{'loss': 1.5458, 'grad_norm': 0.19055938720703125, 'learning_rate': 6.90909090909091e-05, 'epoch': 0.11}
+{'loss': 1.2594, 'grad_norm': 0.17449131608009338, 'learning_rate': 6.545454545454546e-05, 'epoch': 0.11}
+{'loss': 1.4855, 'grad_norm': 0.18045471608638763, 'learning_rate': 6.181818181818182e-05, 'epoch': 0.11}
+{'loss': 1.5159, 'grad_norm': 0.19035977125167847, 'learning_rate': 5.818181818181818e-05, 'epoch': 0.12}
+{'loss': 1.453, 'grad_norm': 0.1981130987405777, 'learning_rate': 5.4545454545454546e-05, 'epoch': 0.12}
+{'loss': 1.4173, 'grad_norm': 0.19510582089424133, 'learning_rate': 5.090909090909091e-05, 'epoch': 0.12}
+{'loss': 1.3659, 'grad_norm': 0.18265926837921143, 'learning_rate': 4.7272727272727275e-05, 'epoch': 0.12}
+{'loss': 1.4704, 'grad_norm': 0.18821114301681519, 'learning_rate': 4.3636363636363636e-05, 'epoch': 0.13}
+{'loss': 1.3985, 'grad_norm': 0.17149870097637177, 'learning_rate': 4e-05, 'epoch': 0.13}
+{'loss': 1.4091, 'grad_norm': 0.1885901242494583, 'learning_rate': 3.6363636363636364e-05, 'epoch': 0.13}
+{'loss': 1.3922, 'grad_norm': 0.2758800983428955, 'learning_rate': 3.272727272727273e-05, 'epoch': 0.13}
+{'loss': 1.4732, 'grad_norm': 0.19263696670532227, 'learning_rate': 2.909090909090909e-05, 'epoch': 0.14}
+{'loss': 1.4044, 'grad_norm': 0.16987690329551697, 'learning_rate': 2.5454545454545454e-05, 'epoch': 0.14}
+{'loss': 1.5382, 'grad_norm': 0.20259740948677063, 'learning_rate': 2.1818181818181818e-05, 'epoch': 0.14}
+{'loss': 1.3791, 'grad_norm': 0.17172208428382874, 'learning_rate': 1.8181818181818182e-05, 'epoch': 0.14}
+{'loss': 1.3654, 'grad_norm': 0.15819130837917328, 'learning_rate': 1.4545454545454545e-05, 'epoch': 0.15}
+{'loss': 1.2826, 'grad_norm': 0.16766786575317383, 'learning_rate': 1.0909090909090909e-05, 'epoch': 0.15}
+{'loss': 1.3769, 'grad_norm': 0.1830740123987198, 'learning_rate': 7.272727272727272e-06, 'epoch': 0.15}
+{'loss': 1.3744, 'grad_norm': 0.18583343923091888, 'learning_rate': 3.636363636363636e-06, 'epoch': 0.16}
+{'loss': 1.3838, 'grad_norm': 0.18047010898590088, 'learning_rate': 0.0, 'epoch': 0.16}
+{'train_runtime': 515.4769, 'train_samples_per_second': 0.931, 'train_steps_per_second': 0.116, 'train_loss': 1.7007558047771454, 'epoch': 0.16}
+100%|███████████████████████████████████████████| 60/60 [08:34<00:00,  8.57s/it]
+程序运行时间：540.1566059589386 秒
+wandb: 
+wandb: 🚀 View run outputs at: https://wandb.ai/zwm136200-hsbc/huggingface/runs/brix8bfr
+wandb: Find logs at: wandb/run-20250219_152226-brix8bfr/logs
