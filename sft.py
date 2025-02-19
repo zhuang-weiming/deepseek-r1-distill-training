@@ -9,6 +9,17 @@ from datasets import load_dataset
 # 记录程序开始时间
 start_time = time.time()
 
+# 设置模型的最大序列长度
+max_seq_length = 2048 # 模型支持 RoPE Scaling，可根据需要设置任意长度
+
+# 加载预训练模型和分词器
+model, tokenizer = FastLanguageModel.from_pretrained(
+    model_name = "unsloth/DeepSeek-R1-Distill-Qwen-7B-unsloth-bnb-4bit", # 指定模型名称
+    max_seq_length = max_seq_length, # 设置最大序列长度
+    dtype = None, # 自动检测并设置数据类型
+    load_in_4bit = True, # 以 4-bit 精度加载模型
+)
+
 # 定义训练时使用的提示模板
 train_prompt_style = """
 <｜begin▁of▁sentence｜>
@@ -25,17 +36,6 @@ train_prompt_style = """
 {}
 <｜end▁of▁sentence｜>
 """
-
-# 设置模型的最大序列长度
-max_seq_length = 2048 # 模型支持 RoPE Scaling，可根据需要设置任意长度
-
-# 加载预训练模型和分词器
-model, tokenizer = FastLanguageModel.from_pretrained(
-    model_name = "unsloth/DeepSeek-R1-Distill-Qwen-7B-unsloth-bnb-4bit", # 指定模型名称
-    max_seq_length = max_seq_length, # 设置最大序列长度
-    dtype = None, # 自动检测并设置数据类型
-    load_in_4bit = True, # 以 4-bit 精度加载模型
-)
 
 # 定义函数，将数据集中的各列格式化为模型输入所需的文本格式
 def formatting_prompts_func(examples):
@@ -95,7 +95,7 @@ trainer = SFTTrainer(
         gradient_accumulation_steps = 4, # 梯度累积步数，相当于增大有效批次大小
         warmup_steps = 5, # 学习率预热步数
         max_steps = 60, # 最大训练步数
-        learning_rate = 2e-5, # 学习率
+        learning_rate = 4e-4, # 学习率
         fp16 = not is_bfloat16_supported(), # 如果不支持 bfloat16，则使用 fp16
         bf16 = is_bfloat16_supported(), # 如果支持 bfloat16，则使用 bf16
         logging_steps = 1, # 日志记录的步数间隔
