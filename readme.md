@@ -1,4 +1,4 @@
-We finetune the distill model of DeepSeek-R1-Distill-Qwen-7B. It can answer the questions of stocks, espcially the China A SZ50 and DOW30 stocks.
+We finetune the distill model of DeepSeek-R1-Distill-Qwen-7B. It can answer the questions on stocks, espcially the China A SZ50 and DOW30 stocks.
  
 1. Datasets：https://huggingface.co/datasets/LYNN2024/fingpt_with_cot_combined_v3
 2. gguf output：https://huggingface.co/jduan1993/DeepSeek-R1-Distill-Qwen-7B-fin-3043-labelling-v3-4bit-GGUF
